@@ -5,9 +5,14 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+api_key = os.getenv("API_KEY")
 
 # === OpenAI API Setup ===
-api_key = "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".strip()
+
 client = OpenAI(api_key=api_key)
 # === Load Trained Model ===
 model = load_model("m32.h5")
@@ -133,10 +138,14 @@ if __name__ == "__main__":
         "install_date": "2022-01-15",
         "warranty_terms": "25-year coverage for material and workmanship defects. Hot-spots covered within first 10 years."
     }
+    data= {
+        "clamp_meter": "Voltage: 300V, Current: 10A",
+        "data_log": "Inverter efficiency: 95%, No errors detected."
+    }
 
     image_path = r"C:\Users\Harsh Chaudhary\Pictures\Camera Roll\IMG-20250509-WA0026.jpg"
 
-    result = solar_panel_diagnosis_pipeline(image_path, metadata)
+    result = solar_panel_diagnosis_pipeline(image_path, metadata,data)
 
     print("\n=== Final Customer Report ===\n")
     print(result["report"])
